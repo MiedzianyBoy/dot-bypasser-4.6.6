@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap">
+<title>Dot Bypasser — Panel</title>
+<style>
+  :root{
+    --bg:#000;
+    --panel:#101014;
+    --panel-2:#16161c;
+    --border:#26262e;
+    --text:#f2f2f5;
+    --muted:#9a9aa5;
+    --accent:#4f8cff;
+    --green:#38d97a;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    min-height:100vh;
+    padding:32px 16px;
+  }
+  .wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+  /* ── header ── */
+  header{
+    display:flex;align-items:center;gap:16px;
+    background:linear-gradient(135deg,#0e0e14 0%,#14141c 100%);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:22px 24px;
+  }
+  .logo{
+    width:56px;height:56px;flex:0 0 56px;border-radius:12px;
+    background:radial-gradient(circle at 30% 30%,#6ea2ff,#2a5cd0);
+    display:flex;align-items:center;justify-content:center;
+    font-size:30px;font-weight:700;color:#fff;
+    box-shadow:0 0 24px rgba(79,140,255,.45);
+  }
+  header h1{font-size:24px;font-weight:700;letter-spacing:.3px}
+  .ver{
+    display:inline-block;margin-left:8px;padding:2px 10px;border-radius:999px;
+    font-size:12px;font-weight:700;color:var(--accent);
+    background:rgba(79,140,255,.12);border:1px solid rgba(79,140,255,.35);
+    vertical-align:middle;
+  }
+  .desc{color:var(--muted);font-size:14px;margin-top:4px}
+
+  /* ── cards grid ── */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+  .card{
+    background:var(--panel);border:1px solid var(--border);
+    border-radius:var(--radius);padding:18px 20px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .card:hover{border-color:#3a3a46;transform:translateY(-2px)}
+  .card h2{
+    font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;
+    color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px;
+  }
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:14px}
+  .row .k{color:var(--muted)}
+  .row .v{font-weight:500;text-align:right;word-break:break-word}
+  kbd{
+    display:inline-block;padding:2px 8px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:700;
+    background:var(--panel-2);border:1px solid var(--border);border-bottom-width:3px;color:var(--text);
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .btn{
+    cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;color:#fff;
+    background:var(--accent);border:none;border-radius:8px;padding:8px 14px;
+    transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.15)}
+
+  /* ── permissions ── */
+  .perm-toggle{
+    width:100%;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;
+    color:var(--muted);background:var(--panel-2);border:1px solid var(--border);
+    border-radius:8px;padding:9px 12px;margin-bottom:10px;transition:color .15s,border-color .15s;
+  }
+  .perm-toggle:hover{color:var(--text);border-color:#3a3a46}
+  .perm-toggle .chev{float:right;transition:transform .2s ease}
+  .perm-toggle.open .chev{transform:rotate(90deg)}
+  .perms{
+    list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;
+    max-height:0;overflow:hidden;transition:max-height .3s ease;
+  }
+  .perms.show{max-height:400px}
+  .perms li{
+    font-size:13px;color:var(--muted);padding:4px 0 4px 18px;position:relative;
+  }
+  .perms li::before{content:"";position:absolute;left:2px;top:10px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+  /* ── about ── */
+  .about p{font-size:14px;line-height:1.65;color:var(--muted)}
+  .about p b{color:var(--text);font-weight:500}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .tag{
+    font-size:12px;font-weight:700;color:var(--accent);
+    background:rgba(79,140,255,.10);border:1px solid rgba(79,140,255,.30);
+    padding:4px 12px;border-radius:999px;
+  }
+  footer{color:var(--muted);font-size:12px;text-align:center;padding:6px 0 2px}
+  @media (max-width:520px){.perms{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">●</div>
+    <div>
+      <h1>Dot Bypasser<span class="ver">v4.6.6</span></h1>
+      <p class="desc">Rozszerzenie obchodzące CVV w wielu bramkach płatniczych.</p>
+    </div>
+  </header>
+
+  <div class="grid">
+    <section class="card">
+      <h2><span class="dot"></span>Status</h2>
+      <div class="row"><span class="k">Wersja manifestu</span><span class="v">MV3</span></div>
+      <div class="row"><span class="k">Worker</span><span class="v">background.js</span></div>
+      <div class="row"><span class="k">Scripty zawartości</span><span class="v">content.js + main.js</span></div>
+      <div class="row"><span class="k">Dostęp</span><span class="v">&lt;all_urls&gt;</span></div>
+      <div class="row"><span class="k">Klawisz</span><span class="v"><kbd>Ctrl</kbd> <kbd>B</kbd></span></div>
+    </section>
+
+    <section class="card">
+      <h2><span class="dot"></span>Ustawienia</h2>
+      <div class="row"><span class="k">Słowo polecającego</span><span class="v">DotBypasser</span></div>
+      <div class="row"><span class="k">Popup</span><span class="v">popup.html</span></div>
+      <div class="row"><span class="k">Opcje</span><span class="v">options.html</span></div>
+      <div class="row" style="margin-top:10px">
+        <span class="k">Otwórz opcje</span>
+        <button class="btn" id="openOpts">Otwórz</button>
+      </div>
+      <div class="row">
+        <span class="k">Skopiuj słowo</span>
+        <button class="btn" id="copyKey">Kopiuj</button>
+      </div>
+    </section>
+
+    <section class="card" style="grid-column:1/-1">
+      <h2><span class="dot"></span>Uprawnienia (15)</h2>
+      <button class="perm-toggle" id="permBtn">Pokaż wszystkie <span class="chev">▸</span></button>
+      <ul class="perms" id="perms">
+        <li>alarms</li><li>activeTab</li><li>clipboardRead</li><li>clipboardWrite</li>
+        <li>declarativeNetRequestWithHostAccess</li><li>downloads</li><li>proxy</li>
+        <li>tabs</li><li>scripting</li><li>storage</li><li>webRequest</li>
+        <li>webRequestAuthProvider</li><li>webNavigation</li><li>offscreen</li>
+        <li>system.cpu · system.memory</li>
+      </ul>
+    </section>
+
+    <section class="card about" style="grid-column:1/-1">
+      <h2><span class="dot"></span>O rozszerzeniu</h2>
+      <p><b>Dot Bypasser</b> to rozszerzenie przeglądarki Chrome (Manifest V3), które automatycznie
+      obejmuje obszar <b>CVV</b> w formularzach płatności — obsługuje wiele popularnych bramek
+      płatniczych. Działa na wszystkich stronach (&lt;all_urls&gt;), z wyłączeniem wyzwań Cloudflare.</p>
+      <p style="margin-top:8px">Autor: <b>REDACTED</b> · Strona główna:
+      <a href="https://telegram.me/onebypasser" target="_blank">@onebypasser</a></p>
+      <div class="tags">
+        <span class="tag">CVV Bypass</span>
+        <span class="tag">Payment Gateways</span>
+        <span class="tag">Manifest V3</span>
+        <span class="tag">Chrome Extension</span>
+      </div>
+    </section>
+  </div>
+
+  <footer>Dot Bypasser 4.6.6 · panel.html</footer>
+</div>
+
+<script>
+  const permBtn = document.getElementById('permBtn');
+  const perms = document.getElementById('perms');
+  permBtn.addEventListener('click', () => {
+    const open = perms.classList.toggle('show');
+    permBtn.classList.toggle('open', open);
+    permBtn.firstChild.textContent = open ? 'Zwiń ' : 'Pokaż wszystkie ';
+  });
+
+  document.getElementById('copyKey').addEventListener('click', async e => {
+    await navigator.clipboard.writeText('DotBypasser');
+    e.target.textContent = '✓ Skopiowano';
+    setTimeout(() => e.target.textContent = 'Kopiuj', 1200);
+  });
+
+  document.getElementById('openOpts').addEventListener('click', () => {
+    if (chrome?.runtime?.openOptionsPage) chrome.runtime.openOptionsPage();
+    else location.href = 'options.html';
+  });
+</script>
+</body>
+</html>
